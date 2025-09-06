@@ -1,0 +1,55 @@
+.section-title {
+  font-size: 2rem;
+  color: var(--bs-primary);
+}
+
+.section-subtitle {
+  font-size: 1.8rem;
+  color:  var(--bs-secondary);
+}
+
+.section-description {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+/* Tarjetas de servicios */
+.service-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.service-icon {
+  font-size: 3rem;
+  color:  var(--bs-secondary);
+}
+
+.service-title {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: var(--bs-primary);
+}
+
+.service-description {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Fondo con patrón */
+.background-pattern {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  opacity: 0.1;
+}
+
+.background-pattern svg {
+  width: 100%;
+  height: 100%;
+}

@@ -13,14 +13,7 @@
   {{ end }}
 </head>
 <body>
-  <header>
-    <h1>{{.PageTitle}}</h1>
-  </header>
   {{.LayoutContent}}  
-  <footer>
-    <p>&copy; 2023 Mi Proyecto Beego</p>
-  </footer>
-  <script src="/static/js/main.js"></script>
   {{ if .Scripts }}
     {{ scripts .Scripts }}
   {{ end }}

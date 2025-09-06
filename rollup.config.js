@@ -14,7 +14,7 @@ const App = {
 		sourcemap: true,
 		format: 'iife',
 		name: 'app',
-		file: production ? 'public/dist/app.min.js' : 'public/dist/app.js',
+		file: production ? 'static/dist/app.min.js' : 'static/dist/app.js',
 	},
 	plugins: [
 		svelte({
@@ -42,7 +42,7 @@ const Error = {
 		sourcemap: true,
 		format: 'iife',
 		name: 'error',
-		file: production ? 'public/dist/error.min.js' : 'public/dist/error.js',
+		file: production ? 'static/dist/error.min.js' : 'static/dist/error.js',
 	},
 	plugins: [
 		svelte({
@@ -70,7 +70,7 @@ const Access = {
 		sourcemap: true,
 		format: 'iife',
 		name: 'access',
-		file: production ? 'public/dist/access.min.js' : 'public/dist/access.js',
+		file: production ? 'static/dist/access.min.js' : 'static/dist/access.js',
 	},
 	plugins: [
 		svelte({
@@ -98,7 +98,7 @@ const Vendor = {
 			sourcemap: true,
 			format: 'iife',
 			name: 'vendor',
-			file: production ? 'public/dist/vendor.min.js' : 'public/dist/vendor.js',
+			file: production ? 'static/dist/vendor.min.js' : 'static/dist/vendor.js',
 	},
 	plugins: [
 		svelte({
@@ -126,7 +126,7 @@ const Vendor = {
 			targets: [
 				{
 					src: 'node_modules/font-awesome/fonts/*',
-					dest: 'public/fonts/'
+					dest: 'static/fonts/'
 				}
 			]
 		})
@@ -136,4 +136,53 @@ const Vendor = {
 	}
 };
 
-export default [App, Error, Access, Vendor, ];
+const Web = {
+  input: 'src/entries/web.js',
+  output: {
+    sourcemap: true,
+    format: 'iife',
+    name: 'web',
+    file: production ? 'static/dist/web.min.js' : 'static/dist/web.js',
+    globals: {
+      'axios': 'axios',
+      'bootstrap': 'bootstrap'
+    }
+  },
+  plugins: [
+    svelte({
+      compilerOptions: {
+        dev: !production
+      }
+    }),
+
+    css({
+      output: 'web.min.css',
+      minify: true
+    }),
+
+    resolve({
+      browser: true,
+      dedupe: ['svelte'],
+      exportConditions: ['svelte']
+    }),
+
+    commonjs(),
+
+    production && terser(),
+
+    copy({
+      hook: 'writeBundle',
+      targets: [
+        {
+          src: 'node_modules/font-awesome/fonts/*',
+          dest: 'static/fonts/'
+        }
+      ]
+    })
+  ],
+  watch: {
+    clearScreen: false
+  }
+};
+
+export default [App, Error, Access, Vendor, Web];

@@ -1,1 +1,10 @@
-404
+<div class="container">
+  <div class="message-container">
+    <h1 class="display-1 fw-bold">404</h1>
+    <h2 class="mb-3">¡Oops! Página no encontrada</h2>
+    <p class="text-muted">La página que buscas no existe o ha sido movida.</p>
+    <a href="{{.globals.BaseURL}}/" class="btn btn-primary mt-3">
+      <i class="fa fa-home icon-left-margin" aria-hidden="true"></i> Regresar al inicio
+    </a>
+  </div>
+</div>

@@ -17,9 +17,34 @@ type WebController struct {
 func (c *WebController) ShowHome() {
 	dbPort := os.Getenv("DB_PORT")
 	log.Printf("WebController: El puerto de la base de datos es: %s", dbPort)
-	c.Layout = "layouts/blank.tpl"
 	c.Data["PageTitle"] = "Bienvenido a InnovaULima"
 	c.Data["Styles"] = common.GetIndexStylesHelper()
 	c.Data["Scripts"] = common.GetIndexScriptsHelper()
+	c.Data["Navlink"] = "index"
+	c.Layout = "layouts/web.tpl"
 	c.TplName = "common/web/index.tpl"
+}
+
+// @router /about [get]
+func (c *WebController) ShowAbout() {
+	dbPort := os.Getenv("DB_PORT")
+	log.Printf("WebController: El puerto de la base de datos es: %s", dbPort)
+	c.Data["PageTitle"] = "Bienvenido a InnovaULima"
+	c.Data["Styles"] = common.GetAboutStylesHelper()
+	c.Data["Scripts"] = common.GetIndexScriptsHelper()
+	c.Data["Navlink"] = "about"
+	c.Layout = "layouts/web.tpl"
+	c.TplName = "common/web/about.tpl"
+}
+
+// @router /contact [get]
+func (c *WebController) ShowContact() {
+	dbPort := os.Getenv("DB_PORT")
+	log.Printf("WebController: El puerto de la base de datos es: %s", dbPort)
+	c.Data["PageTitle"] = "Bienvenido a InnovaULima"
+	c.Data["Styles"] = common.GetContactStylesHelper()
+	c.Data["Scripts"] = common.GetIndexScriptsHelper()
+	c.Data["Navlink"] = "contact"
+	c.Layout = "layouts/web.tpl"
+	c.TplName = "common/web/contact.tpl"
 }

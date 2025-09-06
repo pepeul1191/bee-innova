@@ -1,3 +1,106 @@
+:root {
+    --bs-primary: #ff5216;
+    --bs-secondary: #1a1a1a;
+}
+
+/* Estilos para btn-primary en hover */
+/* public/css/custom.css */
+:root {
+    --bs-primary: #ff5216; /* Naranja brillante */
+    --bs-secondary: #1a1a1a; /* Gris muy oscuro */
+}
+
+/* Estilos para btn-primary */
+.btn-primary {
+    background-color: var(--bs-primary);
+    color: #ffffff; /* Texto blanco para contraste */
+    border-color: var(--bs-primary);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+.btn-primary:hover {
+    background-color: #e04814; /* Tono más oscuro para hover */
+    color: #ffffff;
+    border-color: #e04814;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.btn-primary:focus,
+.btn-primary.focus {
+    background-color: #e04814; /* Mantiene el hover en focus */
+    color: #ffffff;
+    border-color: #d13e12; /* Borde ligeramente más claro para focus */
+    box-shadow: 0 0 0 0.2rem rgba(255, 82, 22, 0.5); /* Halo de focus */
+    outline: none;
+}
+
+.btn-primary:active,
+.btn-primary.active {
+    background-color: #cc4213; /* Tono aún más oscuro para active */
+    color: #ffffff;
+    border-color: #cc4213;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra interna */
+}
+
+.btn-primary:disabled,
+.btn-primary.disabled {
+    background-color: #ff8c66; /* Tono deshabilitado más claro */
+    color: #ffffff;
+    border-color: #ff8c66;
+    opacity: 0.65;
+}
+
+/* Estilos para btn-secondary y btn-outline-secondary */
+.btn-secondary,
+.btn-outline-secondary {
+    background-color: transparent;
+    color: var(--bs-secondary);
+    border-color: var(--bs-secondary);
+}
+
+.btn-outline-secondary {
+    background-color: transparent;
+}
+
+.btn-secondary:hover,
+.btn-outline-secondary:hover {
+    background-color: #2e2e2e; /* Tono más claro para hover */
+    color: #ffffff;
+    border-color: #2e2e2e;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.btn-secondary:focus,
+.btn-outline-secondary:focus,
+.btn-secondary.focus,
+.btn-outline-secondary.focus {
+    background-color: #2e2e2e; /* Mantiene el hover en focus */
+    color: #ffffff;
+    border-color: #333333; /* Borde ligeramente más claro para focus */
+    box-shadow: 0 0 0 0.2rem rgba(26, 26, 26, 0.5); /* Halo de focus */
+    outline: none;
+}
+
+.btn-secondary:active,
+.btn-outline-secondary:active,
+.btn-secondary.active,
+.btn-outline-secondary.active {
+    background-color: #262626; /* Tono más oscuro para active */
+    color: #ffffff;
+    border-color: #262626;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra interna */
+}
+
+.btn-secondary:disabled,
+.btn-outline-secondary:disabled,
+.btn-secondary.disabled,
+.btn-outline-secondary.disabled {
+    background-color: transparent;
+    color: #666666; /* Gris deshabilitado */
+    border-color: #666666;
+    opacity: 0.65;
+}
+
 *,
 ::after,
 ::before {
@@ -16,172 +119,27 @@ a {
     cursor: pointer;
     text-decoration: none;
     /*font-family: 'Poppins', sans-serif;*/
+    color: #e04814 !important;
 }
 
-li {
-    list-style: none;
-}
-
-h4 {
-    /*font-family: 'Poppins', sans-serif;*/
-    font-size: 1.275rem;
-    color: var(--bs-emphasis-color);
-}
-
-/* Layout for admin dashboard skeleton */
-
-body {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-
-  h1{
-    font-size: 22px;
-  }
-
-  h2{
-    font-size: 20px;
-  }
-  
-  .btn-danger, .btn-success{
+a[href].btn-primary {
     color: #fff !important;
-  }
+}
 
-  .btn-secondary{
-    background: var(--bs-gray-dark);
-    color: #FFF !important;
-  }
-
-  .btn-secondary:hover{
-    color: #FDFDFD !important;
-  }
-
-  .page-link, .card-body, .card, .card-header{
+.form-control, .btn, .alert, .modal-content, .form-select, .input-group-text, .page-link, .card{
     border-radius: 0px !important;
-  }
-
-  .card-header i{
-    margin-right: 8px;
-  }
-
-  .dropdown-item:active {
-    background-color: #d9dbdd !important; /* Gris claro */
-    color: #000 !important;
-  }
-
-  .image-preview{
-    width: 100px !important;
-    height: 90px !important;
-  }
-
-  .sidebar {
-    min-width: 250px;
-    max-width: 250px;
-    background-color: var(--bs-gray-dark)!important;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    padding-top: 0;
-    overflow-y: auto;
-    /*border-right: 1px solid #dee2e6;*/
-  }
-
-  .sidebar .nav-link {
-    color: #FDFDFD !important;
-  }
-
-  .nav-link:hover {
-    color: #343434 !important;
-  }
-
-  .sidebar.sidebar .nav-link:hover {
-    background-color: #fff;
-  }
-
-  .nav-link.active{
-    background-color: #fff;
-    padding-top: 15px;
-    padding-bottom: 12px;
-    color: #343434 !important;
-  }
-
-  .main-content {
-    margin-left: 275px;
-    flex: 1;
-    padding: 30px;
-    padding-left: 0px;
-  }
-
-  .top-navbar {
-    position: fixed;
-    top: 0;
-    left: 250px;
-    width: calc(100% - 250px);
-    z-index: 1030;
-    background-color: #e6e6e6!important;
-  }
-
-  .user-menu {
-    cursor: pointer;
-  }
-
-  .user-menu img {
-    width: 35px;
-    height: 35px;
-    object-fit: cover;
-    border-radius: 50%;
-  }
-
-  .user-name {
-    color: var(--secondary-color) !important;
-  }
-
-  .nav-item {
-    padding-top: 10px;
-  }
-
-  .sidebar-header {
-    padding: 1rem;
-    font-size: 1.25rem;
-    border-bottom: 1px solid #dee2e6;
-    background-color: #e6e6e6!important;
-  }
-
-  .form-check-label{
-    margin-left: 10px;
-  }
-
-  .table td {
-
-  }
-
-  /*app*/
-
-  .form-control, .btn, .alert, .modal-content, .form-select{
-    border-radius: 0px;
 }
 
 .btn i{
     margin-right: 8px;
 }
 
-.input-group-text {
-    border-radius: 0px;
+
+.btn-secondary{
+  background: var(--bs-gray-dark);
+  color: #FFF !important;
 }
 
-h1.subtitle{
-    margin-bottom: 0px !important;
-    font-size: 22px !important;
-    margin-top: 10px;
-}
-
-h2.subtitle{
-    margin-bottom: 0px !important;
-    font-size: 20px !important;
-}
-
-.subtitle-row{
-    margin-bottom: 5px !important;
+.btn-secondary:hover{
+  color: #FDFDFD !important;
 }
