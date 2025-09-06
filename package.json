@@ -1,0 +1,56 @@
+{
+  "name": "svelte-app",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "www": "./bin/www.js"
+  },
+  "scripts": {
+    "build": "rollup -c --environment production",
+    "nodemon": "npx nodemon --watch app.js --watch app --watch ./bin/www",
+    "dev": "npm run nodemon & npm run svelte",
+    "dev-none": "",
+    "dev-classroom-gin": "bash -c 'cd /home/pepe/Documentos/go/classroom && npm run dev 2>/dev/null'",
+    "dev-classroom-koa": "bash -c 'cd /home/pepe/Documentos/node/classroom-k && npm run dev 2>/dev/null'",
+    "dev-accesos": "bash -c 'cd /home/pepe/Documentos/go/accesos && go run main.go 2>/dev/null'",
+    "dev-files": "bash -c 'cd /home/pepe/Documentos/ruby/files && npm run dev 2>/dev/null'",
+    "dev-front": "npm run dev",
+    "dev-all": "concurrently --names \"ClassRoom,Accesos,Files,Front\" -c \"bgMagenta.bold,bgCyan.bold,bgGreen.bold,bgWhite.bold\" \"npm run dev-none\" \"npm run dev-accesos\" \"npm run dev-files\" \"npm run dev-front\"",
+    "svelte": "rollup -c -w",
+    "start": "node ./bin/www"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^24.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.0",
+    "@rollup/plugin-terser": "^0.4.0",
+    "concurrently": "^9.2.0",
+    "nodemon": "^3.1.10",
+    "rollup": "^3.15.0",
+    "rollup-plugin-copy": "^3.5.0",
+    "rollup-plugin-css-only": "^4.3.0",
+    "rollup-plugin-livereload": "^2.0.0",
+    "rollup-plugin-svelte": "^7.1.2",
+    "svelte-preprocess": "^6.0.3"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "bootstrap": "^5.3.3",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "dotenv": "^17.2.1",
+    "easymde": "^2.20.0",
+    "ejs": "~2.6.1",
+    "express": "~4.16.1",
+    "express-session": "^1.18.2",
+    "font-awesome": "^4.7.0",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1",
+    "simplemde": "^1.11.2",
+    "sirv-cli": "^2.0.0",
+    "svelte": "^4.2.18",
+    "svelte-app": "file:",
+    "svelte-routing": "^2.13.0"
+  }
+}
