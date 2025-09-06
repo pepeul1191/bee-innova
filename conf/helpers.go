@@ -3,15 +3,42 @@ package conf
 import (
 	"fmt"
 	"html/template"
+	"os"
 	"strings"
 )
 
+type AssetGroup struct {
+	Env   string
+	Files []string
+}
+
+func GetAssetGroup(assetsGroup []AssetGroup) []string {
+	// Obtiene el valor de la variable de entorno
+	env := os.Getenv("STATIC_ENV")
+
+	// Si la variable no está definida, usa "DEV" como valor por defecto
+	if env == "" {
+		env = "DEV"
+	}
+
+	// Itera sobre el slice de assets para encontrar el entorno correcto
+	for _, assets := range assetsGroup {
+		if assets.Env == env {
+			return assets.Files
+		}
+	}
+
+	// Si el entorno no coincide con ninguno, devuelve un slice vacío
+	return []string{}
+}
+
 // GenerateStylesHTML genera etiquetas <link> para hojas de estilo.
-func GenerateStylesHTML(baseURL string, styles []string) template.HTML {
-	if baseURL == "" {
-		baseURL = "/static/"
-	} else if !strings.HasSuffix(baseURL, "/") {
-		baseURL += "/"
+func GenerateStylesHTML(styles []string) template.HTML {
+	// Obtiene el valor de la variable de entorno
+	staticURL := os.Getenv("STATIC_URL")
+	// Si la variable no está definida, usa "DEV" como valor por defecto
+	if staticURL == "" {
+		staticURL = "/static/"
 	}
 
 	var html strings.Builder
@@ -20,18 +47,19 @@ func GenerateStylesHTML(baseURL string, styles []string) template.HTML {
 		if !strings.HasSuffix(style, ".css") {
 			style += ".css"
 		}
-		html.WriteString(fmt.Sprintf(`<link rel="stylesheet" href="%s%s">`, baseURL, style))
+		html.WriteString(fmt.Sprintf(`<link rel="stylesheet" href="%s%s">`, staticURL, style))
 	}
 
 	return template.HTML(html.String())
 }
 
 // GenerateScriptsHTML genera etiquetas <script> para archivos JavaScript.
-func GenerateScriptsHTML(baseURL string, scripts []string) template.HTML {
-	if baseURL == "" {
-		baseURL = "/static/"
-	} else if !strings.HasSuffix(baseURL, "/") {
-		baseURL += "/"
+func GenerateScriptsHTML(scripts []string) template.HTML {
+	// Obtiene el valor de la variable de entorno
+	staticURL := os.Getenv("STATIC_URL")
+	// Si la variable no está definida, usa "DEV" como valor por defecto
+	if staticURL == "" {
+		staticURL = "/static/"
 	}
 
 	var html strings.Builder
@@ -40,8 +68,12 @@ func GenerateScriptsHTML(baseURL string, scripts []string) template.HTML {
 		if !strings.HasSuffix(script, ".js") {
 			script += ".js"
 		}
-		html.WriteString(fmt.Sprintf(`<script src="%s%s"></script>`, baseURL, script))
+		html.WriteString(fmt.Sprintf(`<script src="%s%s"></script>`, staticURL, script))
 	}
 
 	return template.HTML(html.String())
+}
+
+func GetEnv(key string) string {
+	return os.Getenv(key)
 }

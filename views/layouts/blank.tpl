@@ -9,7 +9,7 @@
   <link rel="icon" href="/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/static/icon.png">
   {{ if .Styles }}
-    {{ styles "/static/" .Styles }}
+    {{ styles .Styles }}
   {{ end }}
 </head>
 <body>
@@ -22,7 +22,7 @@
   </footer>
   <script src="/static/js/main.js"></script>
   {{ if .Scripts }}
-    {{ scripts "/static/" .Scripts }}
+    {{ scripts .Scripts }}
   {{ end }}
 </body>
 </html>
