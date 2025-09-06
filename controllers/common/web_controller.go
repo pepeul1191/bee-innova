@@ -1,3 +1,4 @@
+// controllers/common/web_controller.go
 package common
 
 import (
@@ -8,8 +9,11 @@ type WebController struct {
 	web.Controller
 }
 
-// ShowLogin muestra el formulario de login.
-// @router /login [get]
+// @router / [get]
 func (c *WebController) ShowHome() {
+	c.Layout = "layouts/blank.tpl"
+	c.Data["PageTitle"] = "Bienvenido a InnovaULima"
+	c.Data["Styles"] = []string{"main", "login", "forms"}
+	c.Data["Scripts"] = []string{"jquery", "app"}
 	c.TplName = "common/web/index.tpl"
 }
