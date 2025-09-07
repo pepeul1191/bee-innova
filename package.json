@@ -9,7 +9,7 @@
   "scripts": {
     "build": "rollup -c --environment production",
     "bee": "bee run",
-    "dev": "npm run bee & npm run svelte",
+    "dev": "mkdir -p ./tmp/sessions & npm run bee & npm run svelte",
     "dev-none": "",
     "dev-classroom-gin": "bash -c 'cd /home/pepe/Documentos/go/classroom && npm run dev 2>/dev/null'",
     "dev-classroom-koa": "bash -c 'cd /home/pepe/Documentos/node/classroom-k && npm run dev 2>/dev/null'",

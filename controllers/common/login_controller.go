@@ -4,32 +4,46 @@ package common
 import (
 	"bee-innova/conf"
 	"bee-innova/helpers/common"
-
-	"github.com/beego/beego/v2/server/web"
+	"fmt"
 )
 
 type LoginController struct {
-	web.Controller
+	BaseController
 }
 
 // @router /sign-in [get]
 func (c *LoginController) ShowSignIn() {
+	csrfToken := conf.GetCSRFToken(c.Ctx)
+
 	c.Data["PageTitle"] = "Bienvenido"
 	c.Data["Styles"] = common.GetLoginStylesHelper()
 	c.Data["Navlink"] = "about"
-	// Get the CSRF token using your helper
-	csrfToken := conf.GetCSRFToken(c.Ctx)
-
-	// Pass the token to the view's data map
 	c.Data["CsrfToken"] = csrfToken
 	c.Layout = "layouts/blank.tpl"
 	c.TplName = "common/login/sign-in.tpl"
 }
 
-// Login procesa el formulario de login.
-// @router /login [post]
 func (c *LoginController) Login() {
-	c.TplName = "common/login/sign-in.tpl"
+	username := c.GetString("username")
+	password := c.GetString("password")
+
+	if username == "" || password == "" {
+		c.SetFlash("warning", "Campos no pueden estar vacíos")
+		c.Redirect("/login", 302)
+		return
+	}
+
+	// Lógica de autenticación...
+	if username != "admin" || password != "password123" {
+		fmt.Println("Credenciales incorrectas.")
+		c.SetFlash("danger", "Credenciales incorrectas.")
+		c.Redirect("/sign-in", 302)
+		return
+	}
+
+	c.SetFlash("success", "¡Login exitoso!")
+	c.SetSession("username", username)
+	c.Redirect("/sign-in", 302)
 }
 
 // Logout cierra la sesión del usuario.

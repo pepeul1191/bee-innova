@@ -12,15 +12,17 @@
            <input type="hidden" name="_csrf" value="{{.CsrfToken}}">
 
           <!-- Mensaje de error (inicialmente oculto, manejado por JS si es necesario) -->
-          <div class="alert alert-danger <% unless flash[:alert] %> d-none <% end %> text-center" role="alert" id="message">
-            <% if flash[:alert] %>
-              <%= flash[:alert] %>
-            <% end %>
-          </div>
+          {{if .Flash}}
+              {{$flash := .Flash}}
+              <div class="alert alert-{{$flash.level}} alert-dismissible fade show" role="alert">
+                  {{$flash.message}}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+          {{end}}
 
           <div class="mb-3">
-            <label for="email" class="form-label">Correo Electrónico</label>
-            <input type="email" class="form-control" id="email" name="email" placeholder="Ingresa su correo de la universidad" required>
+            <label for="username" class="form-label">Usuario</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Ingrese usuario" required>
             <div class="invalid-feedback">Por favor, ingresa un correo válido.</div>
           </div>
 

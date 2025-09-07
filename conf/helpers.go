@@ -9,6 +9,8 @@ import (
 	"github.com/beego/beego/v2/server/web/context"
 )
 
+// vistas y archivos estaticos
+
 type AssetGroup struct {
 	Env   string
 	Files []string
