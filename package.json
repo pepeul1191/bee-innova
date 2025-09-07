@@ -13,10 +13,11 @@
     "dev-none": "",
     "dev-classroom-gin": "bash -c 'cd /home/pepe/Documentos/go/classroom && npm run dev 2>/dev/null'",
     "dev-classroom-koa": "bash -c 'cd /home/pepe/Documentos/node/classroom-k && npm run dev 2>/dev/null'",
-    "dev-accesos": "bash -c 'cd /home/pepe/Documentos/go/accesos && go run main.go 2>/dev/null'",
+    "dev-accesos": "bash -c 'cd /home/pepev/Documentos/go/access && npm run dev:gin 2>/dev/null'",
     "dev-files": "bash -c 'cd /home/pepe/Documentos/ruby/files && npm run dev 2>/dev/null'",
     "dev-front": "npm run dev",
-    "dev-all": "concurrently --names \"ClassRoom,Accesos,Files,Front\" -c \"bgMagenta.bold,bgCyan.bold,bgGreen.bold,bgWhite.bold\" \"npm run dev-none\" \"npm run dev-accesos\" \"npm run dev-files\" \"npm run dev-front\"",
+    "dev-all-full": "concurrently --names \"ClassRoom,Accesos,Files,Front\" -c \"bgMagenta.bold,bgCyan.bold,bgGreen.bold,bgWhite.bold\" \"npm run dev-none\" \"npm run dev-accesos\" \"npm run dev-files\" \"npm run dev-front\"",
+    "dev-all": "concurrently --names \"Accesos,BeeInnova\" -c \"bgMagenta.bold,bgCyan.bold\" \"npm run dev-accesos\" \"npm run dev\" ",
     "svelte": "rollup -c -w",
     "start": "node ./bin/www"
   },
