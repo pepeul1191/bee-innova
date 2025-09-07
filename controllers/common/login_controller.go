@@ -2,6 +2,9 @@
 package common
 
 import (
+	"bee-innova/conf"
+	"bee-innova/helpers/common"
+
 	"github.com/beego/beego/v2/server/web"
 )
 
@@ -9,9 +12,17 @@ type LoginController struct {
 	web.Controller
 }
 
-// ShowLogin muestra el formulario de login.
-// @router /login [get]
-func (c *LoginController) ShowLogin() {
+// @router /sign-in [get]
+func (c *LoginController) ShowSignIn() {
+	c.Data["PageTitle"] = "Bienvenido"
+	c.Data["Styles"] = common.GetLoginStylesHelper()
+	c.Data["Navlink"] = "about"
+	// Get the CSRF token using your helper
+	csrfToken := conf.GetCSRFToken(c.Ctx)
+
+	// Pass the token to the view's data map
+	c.Data["CsrfToken"] = csrfToken
+	c.Layout = "layouts/blank.tpl"
 	c.TplName = "common/login/sign-in.tpl"
 }
 

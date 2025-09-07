@@ -5,6 +5,8 @@ import (
 	"html/template"
 	"os"
 	"strings"
+
+	"github.com/beego/beego/v2/server/web/context"
 )
 
 type AssetGroup struct {
@@ -76,4 +78,21 @@ func GenerateScriptsHTML(scripts []string) template.HTML {
 
 func GetEnv(key string) string {
 	return os.Getenv(key)
+}
+
+func GetCSRFToken(ctx *context.Context) string {
+	if ctx.Input.CruSession == nil {
+		return ""
+	}
+
+	sessToken := ctx.Input.CruSession.Get(ctx.Request.Context(), CsrfSessionKey)
+	if sessToken == nil {
+		return ""
+	}
+
+	token, ok := sessToken.(string)
+	if !ok {
+		return ""
+	}
+	return token
 }

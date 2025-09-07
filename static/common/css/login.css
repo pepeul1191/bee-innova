@@ -1,0 +1,17 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+.container-fluid {
+  height: 100%;
+}
+.row {
+  height: 100%;
+}
+.btn-google {
+  color: #343434 !important;
+}
+.btn-google:hover {
+  color: #FDFDFD !important;
+}

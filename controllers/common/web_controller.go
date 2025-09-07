@@ -27,9 +27,7 @@ func (c *WebController) ShowHome() {
 
 // @router /about [get]
 func (c *WebController) ShowAbout() {
-	dbPort := os.Getenv("DB_PORT")
-	log.Printf("WebController: El puerto de la base de datos es: %s", dbPort)
-	c.Data["PageTitle"] = "Bienvenido a InnovaULima"
+	c.Data["PageTitle"] = "Acerca de Nosotros"
 	c.Data["Styles"] = common.GetAboutStylesHelper()
 	c.Data["Scripts"] = common.GetIndexScriptsHelper()
 	c.Data["Navlink"] = "about"
@@ -39,9 +37,7 @@ func (c *WebController) ShowAbout() {
 
 // @router /contact [get]
 func (c *WebController) ShowContact() {
-	dbPort := os.Getenv("DB_PORT")
-	log.Printf("WebController: El puerto de la base de datos es: %s", dbPort)
-	c.Data["PageTitle"] = "Bienvenido a InnovaULima"
+	c.Data["PageTitle"] = "Contáctanos"
 	c.Data["Styles"] = common.GetContactStylesHelper()
 	c.Data["Scripts"] = common.GetIndexScriptsHelper()
 	c.Data["Navlink"] = "contact"
