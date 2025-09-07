@@ -3,12 +3,12 @@ package common
 
 import (
 	"bee-innova/conf"
+	"bee-innova/controllers"
 	"bee-innova/helpers/common"
-	"fmt"
 )
 
 type LoginController struct {
-	BaseController
+	controllers.BaseController
 }
 
 // @router /sign-in [get]
@@ -23,6 +23,7 @@ func (c *LoginController) ShowSignIn() {
 	c.TplName = "common/login/sign-in.tpl"
 }
 
+// @router /sign-in [post]
 func (c *LoginController) Login() {
 	username := c.GetString("username")
 	password := c.GetString("password")
@@ -33,22 +34,22 @@ func (c *LoginController) Login() {
 		return
 	}
 
-	// Lógica de autenticación...
-	if username != "admin" || password != "password123" {
-		fmt.Println("Credenciales incorrectas.")
-		c.SetFlash("danger", "Credenciales incorrectas.")
+	// Llamar al servicio de autenticación
+	response, err := controllers.AuthService.LoginByUsername(username, password)
+	if err != nil {
+		// Manejar error del servicio
+		c.SetFlash("danger", "Error en el servicio de autenticación: "+err.Error())
 		c.Redirect("/sign-in", 302)
 		return
 	}
 
+	c.SetSession("auth_token", response.Token)
+	c.SetSession("user_id", response.UserID)
 	c.SetFlash("success", "¡Login exitoso!")
 	c.SetSession("username", username)
 	c.Redirect("/sign-in", 302)
 }
 
-// Logout cierra la sesión del usuario.
-// Esta es una buena práctica para incluir, aunque no esté en tu ruta de 'common'
-// Puedes añadir una ruta en tu 'router.go' como: web.Router("/logout", &common.LoginController{}, "get:Logout")
 func (c *LoginController) Logout() {
 	// 1. Borrar todos los datos de la sesión
 	c.DelSession("user_id")

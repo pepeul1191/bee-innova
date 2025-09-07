@@ -1,11 +1,9 @@
 package routers
 
 import (
-	"bee-innova/controllers"
 	"bee-innova/controllers/common"
 
 	"github.com/beego/beego/v2/server/web"
-	beego "github.com/beego/beego/v2/server/web"
 )
 
 func init() {
@@ -20,6 +18,5 @@ func init() {
 		),
 	)
 
-	beego.Router("/demo", &controllers.MainController{})
 	web.AddNamespace(commonNs)
 }

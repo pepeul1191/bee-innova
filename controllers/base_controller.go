@@ -1,10 +1,13 @@
-package common
+package controllers
 
 import (
+	services "bee-innova/services/common"
 	"fmt"
 
 	"github.com/beego/beego/v2/server/web"
 )
+
+var AuthService = services.NewAuthService()
 
 type BaseController struct {
 	web.Controller
