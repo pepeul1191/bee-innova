@@ -13,14 +13,27 @@ type WebController struct {
 
 // @router / [get]
 func (c *WebController) ShowHome() {
-	//dbPort := os.Getenv("DB_PORT")
-	//log.Printf("WebController: El puerto de la base de datos es: %s", dbPort)
-	c.Data["PageTitle"] = "Bienvenido a InnovaULima"
-	c.Data["Styles"] = common.GetIndexStylesHelper()
-	c.Data["Scripts"] = common.GetIndexScriptsHelper()
-	c.Data["Navlink"] = "index"
-	c.Layout = "layouts/web.tpl"
-	c.TplName = "common/web/index.tpl"
+	// Verificar si el usuario está logueado
+	if user := c.GetSession("user"); user != nil {
+		// Usuario logueado - mostrar dashboard o vista personalizada
+		c.Data["PageTitle"] = "Dashboard - Bienvenido"
+		c.Data["Styles"] = common.GetDashboardStylesHelper()
+		c.Data["Scripts"] = common.GetDashboardScriptsHelper()
+		c.Data["Navlink"] = "dashboard"
+		c.Data["User"] = user // Pasar datos del usuario a la vista
+
+		c.Layout = "layouts/application.tpl"
+		c.TplName = "common/dashboard/index.tpl"
+	} else {
+		// Usuario no logueado - vista normal
+		c.Data["PageTitle"] = "Bienvenido a InnovaULima"
+		c.Data["Styles"] = common.GetIndexStylesHelper()
+		c.Data["Scripts"] = common.GetIndexScriptsHelper()
+		c.Data["Navlink"] = "index"
+
+		c.Layout = "layouts/web.tpl"
+		c.TplName = "common/web/index.tpl"
+	}
 }
 
 // @router /about [get]

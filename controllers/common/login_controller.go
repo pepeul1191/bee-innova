@@ -48,18 +48,20 @@ func (c *LoginController) Login() {
 		c.SetSession("user", response.Data.User)
 		c.SetSession("roles", response.Data.Roles)
 		c.SetFlash("success", "¡Login exitoso!")
+		c.Redirect("/", 302)
 	} else {
 		c.SetFlash("danger", response.Message)
+		c.Redirect("/sign-in", 302)
 	}
-	c.Redirect("/sign-in", 302)
 }
 
 func (c *LoginController) Logout() {
 	// 1. Borrar todos los datos de la sesión
-	c.DelSession("user_id")
-
+	c.DelSession("user")
+	c.DelSession("roles")
+	c.SetFlash("success", "Ha cerrado su sesión correctamente, vuelva pronto")
 	// 2. Redirigir al usuario a la página de login
-	c.Redirect("/login", 302)
+	c.Redirect("/sign-in", 302)
 }
 
 func (c *LoginController) GetSessionData() {

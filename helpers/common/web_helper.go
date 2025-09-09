@@ -4,6 +4,41 @@ import (
 	"bee-innova/conf"
 )
 
+// DASHBOARD
+
+func GetDashboardStylesHelper() []string {
+	// Define los activos estáticos para cada entorno
+	assets := []conf.AssetGroup{
+		{
+			Env:   "DEV",
+			Files: []string{"dist/admin.min", "common/css/index"},
+		},
+		{
+			Env:   "PRD",
+			Files: []string{"dist/admin.min"},
+		},
+	}
+
+	return conf.GetAssetGroup(assets)
+}
+
+func GetDashboardScriptsHelper() []string {
+	assets := []conf.AssetGroup{
+		{
+			Env:   "DEV",
+			Files: []string{"dist/admin"},
+		},
+		{
+			Env:   "PRD",
+			Files: []string{"dist/admin.min"},
+		},
+	}
+
+	return conf.GetAssetGroup(assets)
+}
+
+// HOME
+
 func GetIndexStylesHelper() []string {
 	// Define los activos estáticos para cada entorno
 	assets := []conf.AssetGroup{

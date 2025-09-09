@@ -30,3 +30,12 @@ func (c *ErrorController) Error404() {
 	c.Layout = "layouts/blank.tpl"
 	c.TplName = "common/error/404.tpl"
 }
+
+// Error404 gestiona los errores HTTP 401.
+func (c *ErrorController) Error401() {
+	// Para cualquier otro caso (navegadores web), renderiza la vista HTML
+	c.Data["Styles"] = common.GetError404StylesHelper()
+	c.Data["PageTitle"] = "Error de Acceso"
+	c.Layout = "layouts/blank.tpl"
+	c.TplName = "common/error/401.tpl"
+}
