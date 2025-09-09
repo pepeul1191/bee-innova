@@ -3,7 +3,9 @@ package main
 import (
 	"bee-innova/conf"
 	"bee-innova/controllers/common"
+	"bee-innova/models/responses"
 	_ "bee-innova/routers"
+	"encoding/gob"
 	"log"
 	"os"
 
@@ -12,6 +14,30 @@ import (
 
 	"github.com/joho/godotenv"
 )
+
+func registerGobTypes() {
+	// Estructuras principales
+	gob.Register(responses.LoginAPIResponse{})
+	gob.Register(responses.LoginResponse{})
+	gob.Register(responses.UserLoginResponse{})
+	gob.Register(responses.JWTClaims{})
+
+	// Arrays de estructuras
+	gob.Register([]responses.RoleWithPermissions{})
+	gob.Register([]responses.Permission{})
+	gob.Register([]responses.JWTRole{})
+	gob.Register([]responses.JWTPermission{})
+
+	// Estructuras individuales
+	gob.Register(responses.RoleWithPermissions{})
+	gob.Register(responses.Permission{})
+	gob.Register(responses.JWTRole{})
+	gob.Register(responses.JWTPermission{})
+
+	// Tipos básicos que podrían usarse
+	gob.Register(map[string]interface{}{})
+	gob.Register([]interface{}{})
+}
 
 func main() {
 	// .env
@@ -28,6 +54,8 @@ func main() {
 	web.AddFuncMap("styles", conf.GenerateStylesHTML)
 	web.AddFuncMap("scripts", conf.GenerateScriptsHTML)
 	web.AddFuncMap("GetEnv", conf.GetEnv)
+	// Registrar todas las estructuras que puedan ser almacenadas en sesión
+	registerGobTypes()
 	// prueba .env
 	dbPort := os.Getenv("DB_PORT")
 	log.Printf("El puerto de la base de datos es: %s", dbPort)

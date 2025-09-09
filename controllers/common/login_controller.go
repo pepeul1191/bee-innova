@@ -5,6 +5,7 @@ import (
 	"bee-innova/conf"
 	"bee-innova/controllers"
 	"bee-innova/helpers/common"
+	"net/http"
 )
 
 type LoginController struct {
@@ -38,15 +39,18 @@ func (c *LoginController) Login() {
 	response, err := controllers.AuthService.LoginByUsername(username, password)
 	if err != nil {
 		// Manejar error del servicio
-		c.SetFlash("danger", "Error en el servicio de autenticación: "+err.Error())
+		c.SetFlash("danger", err.Error())
 		c.Redirect("/sign-in", 302)
 		return
 	}
 
-	c.SetSession("auth_token", response.Token)
-	c.SetSession("user_id", response.UserID)
-	c.SetFlash("success", "¡Login exitoso!")
-	c.SetSession("username", username)
+	if response.Success {
+		c.SetSession("user", response.Data.User)
+		c.SetSession("roles", response.Data.Roles)
+		c.SetFlash("success", "¡Login exitoso!")
+	} else {
+		c.SetFlash("danger", response.Message)
+	}
 	c.Redirect("/sign-in", 302)
 }
 
@@ -56,4 +60,35 @@ func (c *LoginController) Logout() {
 
 	// 2. Redirigir al usuario a la página de login
 	c.Redirect("/login", 302)
+}
+
+func (c *LoginController) GetSessionData() {
+	// Obtener datos de la sesión
+	userData := c.GetSession("user")
+	rolesData := c.GetSession("roles")
+
+	// Verificar si el usuario está autenticado
+	if userData == nil {
+		c.Ctx.Output.SetStatus(http.StatusUnauthorized)
+		c.Data["json"] = map[string]interface{}{
+			"success": false,
+			"message": "Usuario no autenticado",
+			"data":    nil,
+		}
+		c.ServeJSON()
+		return
+	}
+
+	// Preparar respuesta
+	response := map[string]interface{}{
+		"success": true,
+		"message": "Datos de sesión obtenidos correctamente",
+		"data": map[string]interface{}{
+			"user":  userData,
+			"roles": rolesData,
+		},
+	}
+
+	c.Data["json"] = response
+	c.ServeJSON()
 }
