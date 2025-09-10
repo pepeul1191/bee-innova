@@ -64,247 +64,116 @@
     }
 
     .return-nav{
-  -webkit-text-decoration: None !important;
-          text-decoration: None !important;
-}
+      text-decoration: none !important;
+    }
 
-.return-nav i{
-  margin-right: 14px !important;
-}
+    .return-nav i{
+      margin-right: 14px !important;
+    }
 
-.btn-row{
-  padding-top: 32px;
-}
-body.dashboard-layout {
-  
-}
+    .btn-row{
+      padding-top: 32px;
+    }
 
-.sidebar {
-  width: 250px;
-  height: 100vh;
-  position: fixed;
-  top: 56px;
-  left: 0;
-  transition: all 0.3s;
-}
+    .main-content .py-4{
+      padding-bottom: 0rem !important; 
+    }
 
-.main-content .py-4{
-  padding-bottom: 0rem !important; 
-}
+    .sidebar.collapsed {
+      transform: translateX(-250px);
+    }
 
-.sidebar.collapsed {
-  transform: translateX(-250px);
-}
+    .content-wrapper {
+      margin-left: 250px;
+      padding: 20px;
+      transition: all 0.3s;
+    }
 
-.content-wrapper {
-  margin-left: 250px;
-  padding: 20px;
-  transition: all 0.3s;
-}
+    .content-wrapper .py-4{
+      padding-top: 0rem !important;
+    }
 
-.content-wrapper .py-4{
-  padding-top: 0rem !important;
-}
+    .sidebar.collapsed ~ .content-wrapper {
+      margin-left: 0;
+    }
 
-.sidebar.collapsed ~ .content-wrapper {
-  margin-left: 0;
-}
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-250px);
+      }
+      
+      .sidebar.show {
+        transform: translateX(0);
+      }
+      
+      .content-wrapper {
+        margin-left: 0;
+      }
+    }
 
-@media (max-width: 768px) {
-  .sidebar {
-    transform: translateX(-250px);
-  }
-  
-  .sidebar.show {
-    transform: translateX(0);
-  }
-  
-  .content-wrapper {
-    margin-left: 0;
-  }
-}
+    /* En tu archivo dashboard.css o styles.css */
+    .sidebar .nav-link.active {
+      background-color: white !important;
+      color: black !important;
+      font-weight: bold;
+    }
 
-/* En tu archivo dashboard.css o styles.css */
-.sidebar .nav-link.active {
-  background-color: white !important;
-  color: black !important;
-  font-weight: bold;
-}
+    /* Opcional: Efecto hover */
+    .sidebar .nav-link:hover:not(.active) {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
 
-/* Opcional: Efecto hover */
-.sidebar .nav-link:hover:not(.active) {
-  background-color: rgba(255, 255, 255, 0.1);
-}
+    .nav-link{
+      color: #FFF;
+    }
 
-.nav-link{
-  color: #FFF;
-}
+    .nav-link:hover{
+      background-color: #dadada !important;
+      color: #343434;
+    }
 
-.nav-link:hover{
-  background-color: #dadada !important;
-  color: #343434;
-}
+    /* formularios */
+    h2 a {
+      text-decoration: none;
+    }
+    .suggestion-list {
+      position: absolute;
+      z-index: 1000;
+      background: #fff;
+      width: inherit;
+      max-height: 300px;
+      overflow-y: auto;
+      margin-top: 2px;
+      border-radius: 4px;
+    }
 
-/* formularios */
+    .suggestion-item {
+      padding: 8px 12px;
+      cursor: pointer;
+      border: 1px solid #eee;
+    }
 
-h2 a {
-  text-decoration: none;
-}
-.suggestion-list {
-  position: absolute;
-  z-index: 1000;
-  background: #fff;
-  width: inherit;
-  max-height: 300px;
-  overflow-y: auto;
-  margin-top: 2px;
-  border-radius: 4px;
-}
-
-.suggestion-item {
-  padding: 8px 12px;
-  cursor: pointer;
-  border: 1px solid #eee;
-}
-
-.suggestion-item:hover, 
-.suggestion-item.active {
-  background-color: #e1e1e1;
-  border: 0px;
-}
-.spinner {
-  animation: spin 1s linear infinite;
-}
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
+    .suggestion-item:hover, 
+    .suggestion-item.active {
+      background-color: #e1e1e1;
+      border: 0px;
+    }
+    .spinner {
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
   </style>
 </head>
 <body class="dashboard-layout">
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand navbar-dark bg-dark fixed-top">
-    <div class="container-fluid">
-      <!-- Botón sidebar -->
-      <button class="btn btn-link text-white" id="sidebarToggle">
-        <i class="fas fa-bars"></i>
-      </button>
+  <!-- Incluir Navbar -->
+  {{template "partials/_navbar.tpl" .}}
+  
+  <!-- Incluir Sidebar -->
+  {{template "partials/_sidebar.tpl" .}}
 
-      <!-- Elementos derecha -->
-      <ul class="navbar-nav ms-auto">
-        <!-- Notificaciones -->
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="notificationsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fas fa-bell"></i>
-            <span class="badge bg-danger">3</span>
-          </a>
-          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationsDropdown">
-            <li><a class="dropdown-item" href="#">Notificación 1</a></li>
-            <li><a class="dropdown-item" href="#">Notificación 2</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Ver todas</a></li>
-          </ul>
-        </li>
-        
-        <!-- Usuario (se actualizará con JavaScript) -->
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fas fa-user-circle"></i> 
-            <span class="user-name" id="userName">Cargando...</span>
-          </a>
-          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-            <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i> Perfil</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li>
-              <div id="authSection">
-                <!-- Se cargará dinámicamente con JavaScript -->
-                <a class="dropdown-item" href="/sign-in">
-                  <i class="fas fa-sign-in-alt me-2"></i> Iniciar sesión
-                </a>
-              </div>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-  </nav>
-
-  <!-- Sidebar -->
-  <div class="sidebar bg-primary text-white">
-    <div class="sidebar-header p-3">
-      <h3><i class="fas fa-ticket" style="margin-right: 0.5rem;"></i>TicketMaster</h3>
-    </div>
-
-    <ul class="nav flex-column">
-      <li class="nav-item">
-        <a class="nav-link {{if eq .Navlink "management"}}active{{end}}" href="/management">
-          <i class="fas fa-home me-2"></i> Inicio
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link {{if eq .Navlink "locations"}}active{{end}}" href="/management/locations">
-          <i class="fas fa-map me-2"></i> Locaciones
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link {{if eq .Navlink "tags"}}active{{end}}" href="/management/tags">
-          <i class="fas fa-tag me-2"></i> Etiquetas
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link {{if eq .Navlink "enterprises"}}active{{end}}" href="/management/enterprises">
-          <i class="fas fa-industry me-2"></i> Empresas
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link {{if eq .Navlink "employees"}}active{{end}}" href="/management/employees">
-          <i class="fas fa-user me-2"></i> Empleados
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link {{if eq .Navlink "assets"}}active{{end}}" href="/management/assets">
-          <i class="fas fa-cube me-2"></i> Activos
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link {{if eq .Navlink "roles"}}active{{end}}" href="/management/roles">
-          <i class="fas fa-list me-2"></i> Roles de Usuarios
-        </a>
-      </li>
-      
-      <li class="nav-item">
-        <a class="nav-link {{if eq .Navlink "users"}}active{{end}}" href="/management/users">
-          <i class="fas fa-users me-2"></i> Usuarios
-        </a>
-      </li>
-      
-      <li class="nav-item">
-        <a class="nav-link" href="#productosSubmenu" data-bs-toggle="collapse">
-          <i class="fas fa-cubes me-2"></i> Productos
-        </a>
-        <ul id="productosSubmenu" class="collapse nav flex-column ps-4">
-          <li class="nav-item">
-            <a class="nav-link {{if eq .Navlink "products"}}active{{end}}" href="/management/products">Lista</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link {{if eq .Navlink "new_product"}}active{{end}}" href="/management/new">Agregar</a>
-          </li>
-        </ul>
-      </li>
-      
-      <li class="nav-item">
-        <a class="nav-link {{if eq .Navlink "config"}}active{{end}}" href="/management/config">
-          <i class="fas fa-cog me-2"></i> Configuración
-        </a>
-      </li>
-    </ul>
-  </div>
   <!-- Contenido principal -->
   <div class="main-content" id="mainContent">
     <div class="container-fluid">
@@ -329,7 +198,7 @@ h2 a {
         try {
           const response = await fetch('/api/v1/session', {
             method: 'GET',
-            credentials: 'include' // Incluir cookies de sesión
+            credentials: 'include'
           });
           
           if (!response.ok) {
@@ -352,17 +221,14 @@ h2 a {
         
         if (sessionData.success && sessionData.data && sessionData.data.user) {
           const user = sessionData.data.user;
-          // Mostrar nombre del usuario
           userNameElement.textContent = user.full_name || user.username || 'Usuario';
           
-          // Actualizar sección de autenticación para logout
           authSection.innerHTML = `
             <a class="dropdown-item" href="/sign-out">
               <i class="fas fa-sign-out-alt me-2"></i> Cerrar sesión
             </a>
           `;
         } else {
-          // Usuario no autenticado
           userNameElement.textContent = 'Invitado';
           authSection.innerHTML = `
             <a class="dropdown-item" href="/sign-in">
@@ -384,7 +250,7 @@ h2 a {
       // Actualizar UI con datos de sesión
       updateUIBasedOnSession();
       
-      // Opcional: Actualizar cada cierto tiempo (ej. cada minuto)
+      // Opcional: Actualizar cada cierto tiempo
       setInterval(updateUIBasedOnSession, 60000);
     });
   </script>
