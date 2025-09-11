@@ -3,7 +3,7 @@
     <div class="container-fluid">
         <!-- Botón sidebar -->
         <button class="btn btn-link text-white" id="sidebarToggle">
-            <i class="fas fa-bars"></i>
+            <i class="fa fa-bars"></i>
         </button>
 
         <!-- Elementos derecha -->
@@ -11,7 +11,7 @@
             <!-- Notificaciones -->
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="notificationsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fas fa-bell"></i>
+                    <i class="fa fa-bell"></i>
                     <span class="badge bg-danger">3</span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationsDropdown">
@@ -25,17 +25,17 @@
             <!-- Usuario (se actualizará con JavaScript) -->
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fas fa-user-circle"></i> 
+                    <i class="fa fa-user"></i> 
                     <span class="user-name" id="userName">Cargando...</span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                    <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i> Perfil</a></li>
+                    <li><a class="dropdown-item" href="#"><i class="fa fa-user me-2"></i> Perfil</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li>
                         <div id="authSection">
                             <!-- Se cargará dinámicamente con JavaScript -->
                             <a class="dropdown-item" href="/sign-in">
-                                <i class="fas fa-sign-in-alt me-2"></i> Iniciar sesión
+                                <i class="fa fa-sign-in me-2"></i> Iniciar sesión
                             </a>
                         </div>
                     </li>

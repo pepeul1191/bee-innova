@@ -11,7 +11,7 @@ func GetDashboardStylesHelper() []string {
 	assets := []conf.AssetGroup{
 		{
 			Env:   "DEV",
-			Files: []string{"dist/admin.min", "common/css/index"},
+			Files: []string{"dist/vendor.min", "dist/admin"},
 		},
 		{
 			Env:   "PRD",
@@ -26,7 +26,7 @@ func GetDashboardScriptsHelper() []string {
 	assets := []conf.AssetGroup{
 		{
 			Env:   "DEV",
-			Files: []string{"dist/admin"},
+			Files: []string{"dist/vendor", "dist/admin"},
 		},
 		{
 			Env:   "PRD",
