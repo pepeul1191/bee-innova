@@ -22,8 +22,9 @@ func (c *WebController) ShowHome() {
 		c.Data["Navlink"] = "dashboard"
 		c.Data["User"] = user // Pasar datos del usuario a la vista
 
-		c.Layout = "layouts/application.tpl"
-		c.TplName = "common/dashboard/index.tpl"
+		//c.Layout = "layouts/application.tpl"
+		//c.TplName = "common/dashboard/index.tpl"
+		c.TplName = "admin/index.tpl"
 	} else {
 		// Usuario no logueado - vista normal
 		c.Data["PageTitle"] = "Bienvenido a InnovaULima"

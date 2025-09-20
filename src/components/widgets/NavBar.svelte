@@ -1,0 +1,31 @@
+<script>
+  // src/components/widgets/NavBar.svelte
+</script>
+
+<style>
+
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Dashboard</a>
+      
+      <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Notificaciones</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Perfil</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Cerrar Sesión</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+</nav>
