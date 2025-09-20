@@ -17,9 +17,7 @@ import (
 
 func registerGobTypes() {
 	// Estructuras principales
-	gob.Register(responses.LoginAPIResponse{})
 	gob.Register(responses.LoginResponse{})
-	gob.Register(responses.UserLoginResponse{})
 	gob.Register(responses.JWTClaims{})
 
 	// Arrays de estructuras

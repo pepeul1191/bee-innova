@@ -45,9 +45,10 @@ func (c *LoginController) Login() {
 	}
 
 	if response.Success {
-		c.SetSession("user", response.Data.User)
-		c.SetSession("roles", response.Data.Roles)
-		c.SetFlash("success", "¡Login exitoso!")
+		c.SetSession("user", response.User)
+		c.SetSession("roles", response.Roles)
+		c.SetSession("tokens", response.Tokens)
+		//c.SetFlash("success", response.Message)
 		c.Redirect("/", 302)
 	} else {
 		c.SetFlash("danger", response.Message)
@@ -66,11 +67,12 @@ func (c *LoginController) Logout() {
 
 func (c *LoginController) GetSessionData() {
 	// Obtener datos de la sesión
-	userData := c.GetSession("user")
-	rolesData := c.GetSession("roles")
+	user := c.GetSession("user")
+	roles := c.GetSession("roles")
+	tokens := c.GetSession("tokens")
 
 	// Verificar si el usuario está autenticado
-	if userData == nil {
+	if user == nil {
 		c.Ctx.Output.SetStatus(http.StatusUnauthorized)
 		c.Data["json"] = map[string]interface{}{
 			"success": false,
@@ -86,8 +88,9 @@ func (c *LoginController) GetSessionData() {
 		"success": true,
 		"message": "Datos de sesión obtenidos correctamente",
 		"data": map[string]interface{}{
-			"user":  userData,
-			"roles": rolesData,
+			"user":   user,
+			"roles":  roles,
+			"tokens": tokens,
 		},
 	}
 

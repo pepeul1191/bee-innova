@@ -4,18 +4,40 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 )
 
-// LoginResponse - Estructura principal de respuesta del login
-type LoginResponse struct {
-	User  UserLoginResponse     `json:"user"`
-	Roles []RoleWithPermissions `json:"roles"`
+// AccessResponse - Estructura principal de respuesta del login
+type AccessAPIResponse struct {
+	Success bool               `json:"success"`
+	Message string             `json:"message"`
+	Error   string             `json:"error"`
+	Data    AccessDataResponse `json:"data"`
 }
 
-// UserLoginResponse - Información del usuario en la respuesta de login
-type UserLoginResponse struct {
+type AccessDataResponse struct {
+	User  UserAccessResponse    `json:"user"`
+	Roles []RoleWithPermissions `json:"roles"`
+	Token string                `json:"token"`
+}
+
+// LoginResponse - Estructura principal de respuesta del login
+type LoginResponse struct {
+	Success bool                  `json:"success"`
+	Message string                `json:"message"`
+	User    UserAccessResponse    `json:"user"`
+	Roles   []RoleWithPermissions `json:"roles"`
+	Tokens  []TokenJWT            `json:"tokens"`
+}
+
+// Permission - Estructura de permiso
+type TokenJWT struct {
+	Name string `json:"name"`
+	JWT  string `json:"jwt"`
+}
+
+// UserAccessResponse - Información del usuario en la respuesta de login
+type UserAccessResponse struct {
 	ID       uint64 `json:"id"`
 	Username string `json:"username"`
 	Email    string `json:"email"`
-	Token    string `json:"token"`
 }
 
 // RoleWithPermissions - Rol con sus permisos
@@ -51,11 +73,4 @@ type JWTRole struct {
 type JWTPermission struct {
 	ID   uint64 `json:"id"`
 	Name string `json:"name"`
-}
-
-type LoginAPIResponse struct {
-	Success bool          `json:"success"`
-	Message string        `json:"message,omitempty"`
-	Data    LoginResponse `json:"data,omitempty"`
-	Error   string        `json:"error,omitempty"`
 }
