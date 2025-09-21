@@ -15,7 +15,7 @@
  
   </style>
 </head>
-<body>
+<body >
 
   {{ if .Scripts }}
     {{ scripts .Scripts }}

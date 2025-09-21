@@ -20,10 +20,10 @@
             <a class="nav-link" href="#">Notificaciones</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Perfil</a>
+            <a class="nav-link" href="/api/v1/session">Perfil</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Cerrar Sesión</a>
+            <a class="nav-link" href="/sign-out">Cerrar Sesión</a>
           </li>
         </ul>
       </div>

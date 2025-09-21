@@ -30,7 +30,13 @@ func (s *AuthService) LoginByUsername(username, password string) (*responses.Log
 	}
 
 	// Call the private helper function to perform the HTTP request
-	accessAPIResponse, err := s.makeAuthRequest(username, password)
+	accessAPIResponse, err := s.makeAuthAccessRequest(username, password)
+	if err != nil {
+		return nil, err
+	}
+
+	// Call the private helper function to perform the HTTP request
+	filesAPIResponse, err := s.makeAuthFilesRequest()
 	if err != nil {
 		return nil, err
 	}
@@ -41,21 +47,81 @@ func (s *AuthService) LoginByUsername(username, password string) (*responses.Log
 	loginResponse.Message = accessAPIResponse.Message
 	loginResponse.User = accessAPIResponse.Data.User
 	loginResponse.Roles = accessAPIResponse.Data.Roles
-	loginResponse.Tokens = []responses.TokenJWT{
-		{Name: "access", JWT: accessAPIResponse.Data.Token},
-	}
+	loginResponse.Tokens.Access = accessAPIResponse.Data.Token
+	loginResponse.Tokens.File = filesAPIResponse.Data.Token
 
 	return &loginResponse, nil
 }
 
-// makeAuthRequest is a private helper function that encapsulates the HTTP request logic.
-func (s *AuthService) makeAuthRequest(username, password string) (*responses.AccessAPIResponse, error) {
+// makeAuthAccessRequest is a private helper function that encapsulates the HTTP request logic.
+func (s *AuthService) makeAuthFilesRequest() (*responses.FilesAPIResponse, error) {
 	// 1. Get environment variables
-	urlAccess := os.Getenv("URL_ACCESS_SERVICE")
+	url := os.Getenv("URL_FILES_SERVICE")
+	xAuthHeader := os.Getenv("X_AUTH_FILES_SERVICE")
+
+	if url == "" || xAuthHeader == "" {
+		return nil, fmt.Errorf("files service is not available (missing configuration)")
+	}
+
+	requestBody := map[string]interface{}{}
+
+	jsonBody, err := json.Marshal(requestBody)
+	if err != nil {
+		log.Printf("Internal error marshalling JSON: %v", err)
+		return nil, fmt.Errorf("internal error processing the request")
+	}
+
+	// Create the HTTP request
+	req, err := http.NewRequest("POST", url+"/api/v1/sign-in", bytes.NewBuffer(jsonBody))
+	if err != nil {
+		log.Printf("Error creating HTTP request: %v", err)
+		return nil, fmt.Errorf("connection error with the files service")
+	}
+
+	// Add headers
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("X-Auth-Trigger", xAuthHeader)
+
+	// Perform the request
+	client := &http.Client{
+		Timeout: 30 * time.Second,
+	}
+
+	resp, err := client.Do(req)
+	if err != nil {
+		log.Printf("Error during HTTP request: %v", err)
+		return nil, fmt.Errorf("could not connect to the files service")
+	}
+	defer resp.Body.Close()
+
+	// Read the full response body
+	respBody, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Printf("Error reading response: %v", err)
+		return nil, fmt.Errorf("error processing the files service response")
+	}
+
+	log.Printf("files service response: %s", string(respBody))
+
+	// Decode the response
+	var filesAPIResponse responses.FilesAPIResponse
+	if err := json.Unmarshal(respBody, &filesAPIResponse); err != nil {
+		log.Printf("Error decoding JSON: %v - Response: %s", err, string(respBody))
+		return nil, fmt.Errorf("invalid response from the files service")
+	}
+
+	return &filesAPIResponse, nil
+}
+
+// makeAuthAccessRequest is a private helper function that encapsulates the HTTP request logic.
+func (s *AuthService) makeAuthAccessRequest(username, password string) (*responses.AccessAPIResponse, error) {
+	// 1. Get environment variables
+	url := os.Getenv("URL_ACCESS_SERVICE")
 	xAuthHeader := os.Getenv("X_AUTH_ACCESS_SERVICE")
 	systemIDStr := os.Getenv("SYSTEM_ID")
 
-	if urlAccess == "" || xAuthHeader == "" || systemIDStr == "" {
+	if url == "" || xAuthHeader == "" || systemIDStr == "" {
 		return nil, fmt.Errorf("authentication service is not available (missing configuration)")
 	}
 
@@ -77,7 +143,7 @@ func (s *AuthService) makeAuthRequest(username, password string) (*responses.Acc
 	}
 
 	// Create the HTTP request
-	req, err := http.NewRequest("POST", urlAccess+"/api/v1/users/sign-in/by-username", bytes.NewBuffer(jsonBody))
+	req, err := http.NewRequest("POST", url+"/api/v1/users/sign-in/by-username", bytes.NewBuffer(jsonBody))
 	if err != nil {
 		log.Printf("Error creating HTTP request: %v", err)
 		return nil, fmt.Errorf("connection error with the authentication service")

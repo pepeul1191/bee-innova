@@ -18,19 +18,31 @@ type AccessDataResponse struct {
 	Token string                `json:"token"`
 }
 
+// FilesResponse - Estructura principal de respuesta del login
+type FilesAPIResponse struct {
+	Success bool              `json:"success"`
+	Message string            `json:"message"`
+	Error   string            `json:"error"`
+	Data    FilesDataResponse `json:"data"`
+}
+
+type FilesDataResponse struct {
+	Token string `json:"token"`
+}
+
 // LoginResponse - Estructura principal de respuesta del login
 type LoginResponse struct {
 	Success bool                  `json:"success"`
 	Message string                `json:"message"`
 	User    UserAccessResponse    `json:"user"`
 	Roles   []RoleWithPermissions `json:"roles"`
-	Tokens  []TokenJWT            `json:"tokens"`
+	Tokens  Tokens                `json:"tokens"`
 }
 
 // Permission - Estructura de permiso
-type TokenJWT struct {
-	Name string `json:"name"`
-	JWT  string `json:"jwt"`
+type Tokens struct {
+	Access string `json:"access"`
+	File   string `json:"files"`
 }
 
 // UserAccessResponse - Información del usuario en la respuesta de login
